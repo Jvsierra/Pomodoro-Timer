@@ -86,7 +86,7 @@ class Application:
             self.counter -= 1
             
         if self.counter == 0:
-            PlaySound('Alarm Sound.wav', SND_FILENAME)
+            PlaySound(r'resources\Alarm Sound.wav', SND_FILENAME)
             self.running = False
         
     def countTime(self):    
@@ -133,6 +133,6 @@ root = tk.Tk()
 root.geometry("300x185")
 root.title("Pomodoro Timer")
 root.resizable(0, 0)
-root.iconbitmap(r'C:\Users\Pichau\.spyder-py3\Pomodoro\resources\icons8-tomato-48.png')
+root.iconbitmap(r'resources\icons8-tomato-48.png')
 Application(root)
 root.mainloop()
