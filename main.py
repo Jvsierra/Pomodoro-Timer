@@ -23,6 +23,7 @@ def readConfigFile():
 
 class MainWindow:
     timeStr = ""
+    fixedStr = ""
     
     pomodoroValue = ""
     shortBreakValue = ""
@@ -41,6 +42,8 @@ class MainWindow:
         self.pomodoroValue = str(time.strftime("%M:%S", time.strptime(self.pomodoroValue, "%M:%S")))
         self.shortBreakValue = str(time.strftime("%M:%S", time.strptime(self.shortBreakValue, "%M:%S")))
         self.longBreakValue = str(time.strftime("%M:%S", time.strptime(self.longBreakValue, "%M:%S")))
+
+        self.fixedStr = self.pomodoroValue
 
         self.changeCronometerLabelText(self.pomodoroValue)
     
@@ -98,7 +101,7 @@ class MainWindow:
         
         self.btnReset = tk.Button(self.buttonsContainer)
         self.btnReset["text"] = "Reset"
-        self.btnReset["command"] = lambda: self.changeCronometerLabelText(self.timeStr)
+        self.btnReset["command"] = lambda: self.evtBtnReset()
         self.btnReset["bg"] = "lightgray"
         self.btnReset.pack(side=tk.LEFT)
     
@@ -144,16 +147,19 @@ class MainWindow:
         
     def evtBtnReset(self):
         self.running = False
-        self.counter = self.get_sec(self.timeStr)
-        print(self.running)
+        self.counter = self.get_sec(self.fixedStr)
+        self.changeCronometerLabelText(self.fixedStr)
         
     def evtBtnPomodoro(self):
+        self.fixedStr = self.pomodoroValue
         self.changeCronometerLabelText(self.pomodoroValue)
         
     def evtBtnShortBreak(self):
+        self.fixedStr = self.shortBreakValue
         self.changeCronometerLabelText(self.shortBreakValue)
         
     def evtBtnLongBreak(self):
+        self.fixedStr = self.longBreakValue
         self.changeCronometerLabelText(self.longBreakValue)
 
     def evtBtnOptions(self):
@@ -221,9 +227,13 @@ class ConfigurationWindow:
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
 
-root = tk.Tk()
-root.title("Pomodoro Timer")
-root.resizable(0, 0)
-root.iconbitmap(r'C:\Users\Pichau\.spyder-py3\Pomodoro\resources\icons8-tomato-48.png')
-MainWindow(root)
-root.mainloop()
+def main():
+    root = tk.Tk()
+    root.title("Pomodoro Timer")
+    root.resizable(0, 0)
+    root.iconbitmap(r'C:\Users\Pichau\.spyder-py3\Pomodoro\resources\icons8-tomato-48.png')
+    MainWindow(root)
+    root.mainloop()
+    
+if __name__ == '__main__':
+    main()
